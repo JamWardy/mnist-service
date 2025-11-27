@@ -1,4 +1,3 @@
-# api/main.py
 import io
 import torch
 from pathlib import Path
