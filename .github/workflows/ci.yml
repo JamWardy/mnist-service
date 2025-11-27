@@ -28,7 +28,7 @@ jobs:
         run: |
           pytest
 
-      # - name: Build Docker image
-      #   run: |
-      #     docker build -t mnist-service .
+      - name: Build Docker image
+        run: |
+          docker build -t mnist-service .
 
