@@ -1,0 +1,19 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+.env/
+dockerenv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Data and model artifacts (optional)
+data/
+models/
+
+# VS Code / IDE stuff
+.vscode/
+.idea/
+
