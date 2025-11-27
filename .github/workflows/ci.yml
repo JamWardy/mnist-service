@@ -32,3 +32,16 @@ jobs:
         run: |
           docker build -t mnist-service .
 
+      - name: Log in to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build and push Docker image
+        if: github.ref == 'refs/heads/main'
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/mnist-service
+          docker build -t $IMAGE_NAME:${{ github.sha }} .
+          docker tag $IMAGE_NAME:${{ github.sha }} $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:${{ github.sha }}
+          docker push $IMAGE_NAME:latest
