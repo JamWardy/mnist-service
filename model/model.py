@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 class MnistNet(nn.Module):
     def __init__(self):
         super().__init__()
@@ -11,8 +10,7 @@ class MnistNet(nn.Module):
         self.fc3 = nn.Linear(64, 10)
 
     def forward(self, x):
-        # x: (batch_size, 1, 28, 28)
-        x = x.view(x.size(0), -1)  # flatten
+        x = x.view(x.size(0), -1)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)

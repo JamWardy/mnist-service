@@ -11,8 +11,8 @@ from model import MnistNet
 
 def get_data_loaders(batch_size=64):
     transform = transforms.Compose([
-        transforms.ToTensor(),               # [0, 255] -> [0.0, 1.0]
-        transforms.Normalize((0.1307,), (0.3081,)),  # standard MNIST norm
+        transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,)),
     ])
 
     train_dataset = datasets.MNIST(
@@ -91,7 +91,7 @@ def main():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-    epochs = 3  # keep small for demo
+    epochs = 5
 
     for epoch in range(1, epochs + 1):
         train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, device)
@@ -102,13 +102,11 @@ def main():
             f"- test_loss: {test_loss:.4f}, test_acc: {test_acc:.4f}"
         )
 
-    # Save model
     models_dir = Path("models")
     models_dir.mkdir(exist_ok=True)
     model_path = models_dir / "mnist_net.pt"
     torch.save(model.state_dict(), model_path)
     print(f"Saved model to {model_path.resolve()}")
-
 
 if __name__ == "__main__":
     main()

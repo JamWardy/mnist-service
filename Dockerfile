@@ -18,11 +18,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy code & model
 COPY model ./model
-COPY api ./api
+COPY app ./app
 COPY models ./models
 
 # Expose port
 EXPOSE 8000
 
 # Start the API
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
