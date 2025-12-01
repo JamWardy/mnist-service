@@ -9,11 +9,13 @@ from model import MnistNet
 
 
 def get_data_loaders(batch_size=64):
+    # Perform standard MNIST training transformation
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,)),
     ])
 
+    # Download datasets if needed
     train_dataset = datasets.MNIST(
         root="./data",
         train=True,
@@ -28,24 +30,36 @@ def get_data_loaders(batch_size=64):
         transform=transform,
     )
 
+    # Create data loaders to load images
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    
     return train_loader, test_loader
 
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
+    # Set model to training mode
     model.train()
+
     running_loss = 0.0
     correct = 0
     total = 0
 
     for images, labels in loader:
+        # Move data to CPU or GPU
         images, labels = images.to(device), labels.to(device)
 
+        # Reset gradients
         optimizer.zero_grad()
+
+        # Forward pass
         outputs = model(images)
         loss = criterion(outputs, labels)
+
+        # Backward pass
         loss.backward()
+
+        # Weight update
         optimizer.step()
 
         running_loss += loss.item() * images.size(0)
@@ -56,7 +70,6 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
     epoch_loss = running_loss / total
     epoch_acc = correct / total
     return epoch_loss, epoch_acc
-
 
 def evaluate(model, loader, criterion, device):
     model.eval()
@@ -70,7 +83,10 @@ def evaluate(model, loader, criterion, device):
             outputs = model(images)
             loss = criterion(outputs, labels)
 
+            # Scale loss by batch size, because nn.CrossEntropyLoss() calculates the mean by default
             running_loss += loss.item() * images.size(0)
+
+            # Calculate argmax accuracy
             _, preds = torch.max(outputs, 1)
             correct += (preds == labels).sum().item()
             total += labels.size(0)
@@ -79,19 +95,20 @@ def evaluate(model, loader, criterion, device):
     acc = correct / total
     return loss, acc
 
-
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Using device:", device)
 
+    # Set-up data, model and its training method
     train_loader, test_loader = get_data_loaders()
-
     model = MnistNet().to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
+    # Use few epochs as the dataset is small, so we will likely overfit
     epochs = 5
 
+    # Training loop
     for epoch in range(1, epochs + 1):
         train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, device)
         test_loss, test_acc = evaluate(model, test_loader, criterion, device)
@@ -101,8 +118,11 @@ def main():
             f"- test_loss: {test_loss:.4f}, test_acc: {test_acc:.4f}"
         )
 
+    # Just check path exists before saving
     models_dir = Path("models")
     models_dir.mkdir(exist_ok=True)
+
+    # Save model weights
     model_path = models_dir / "mnist_net.pt"
     torch.save(model.state_dict(), model_path)
     print(f"Saved model to {model_path.resolve()}")
