@@ -1,19 +1,15 @@
 import io
 import torch
 from pathlib import Path
-from typing import List
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request
-from fastapi.responses import JSONResponse, HTMLResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from PIL import Image
 from torchvision import transforms
 
 from model.model import MnistNet
 
 app = FastAPI(title="MNIST Classification Service")
-
-templates = Jinja2Templates(directory="app/templates")
 
 MODELS_DIR = Path("models")
 MODEL_PATH = MODELS_DIR / "mnist_net.pt"
@@ -40,8 +36,9 @@ def predict_digit(image: Image.Image):
     return int(predicted.item()), float(confidence.item())
 
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def home():
+    index_file = Path("app/templates/index.html")
+    return FileResponse(index_file)
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
