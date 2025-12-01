@@ -16,15 +16,9 @@ This project is an example of end-to-end machine learning deployment: a FastAPI 
 
 - Fully Dockerized for reproducible builds and cross-platform execution
 
-- CI/CD Pipeline with GitHub Actions
+- CI/CD Pipeline with GitHub Actions to build and publish Docker images
 
-    - Testing with PyTest
-
-    - Builds Docker images
-
-    - Lints code
-
-    - Publishes container images
+    - Includes testing with PyTest
 
 - Clean, simple architecture suitable for learning ML deployment concepts
 
