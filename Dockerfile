@@ -1,25 +1,35 @@
-# --- Frontend build stage ---
+# Frontend build stage
 FROM node:20-alpine AS frontend-builder
+
+# Set working directory
 WORKDIR /frontend
 
+# Install frontend dependencies
 COPY frontend/package.json frontend/package-lock.json* ./ 
 RUN npm install
 
+# Run Vite build to produce static files
 COPY frontend ./
 RUN npm run build
 
-# --- Backend / runtime stage ---
+# Backend and runtime stage
 FROM python:3.8-slim
 
+# Don't write byte code for a cleaner image
 ENV PYTHONDONTWRITEBYTECODE=1
+
+# Flush logs immediately
 ENV PYTHONUNBUFFERED=1
 
+# Set working directory
 WORKDIR /app
 
+# Install tools necessary for compilers, and remove cached package lists
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
  && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -28,9 +38,11 @@ COPY model ./model
 COPY app ./app
 COPY models ./models
 
-# Copy built frontend into backend package
+# Copy frontend static files
 COPY --from=frontend-builder /frontend/dist ./app/frontend/dist
 
+# Say the app uses port 8000
 EXPOSE 8000
 
+# Launch the FastaPI app using Uvicorn
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
