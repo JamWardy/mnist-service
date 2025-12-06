@@ -87,6 +87,13 @@ if FRONTEND_DIR.exists():
     async def serve_frontend_root():
         return FileResponse(FRONTEND_DIR / "index.html")
 
+# Ping for testing
+def ping(event, context):
+    return {
+        "statusCode": 200,
+        "body": "pong"
+    }
+
 # Mangum handler for Lambda
 from mangum import Mangum
 handler = Mangum(app)

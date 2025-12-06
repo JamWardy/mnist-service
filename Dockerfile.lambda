@@ -13,7 +13,7 @@ COPY frontend ./
 RUN npm run build
 
 # Backend and runtime stage
-FROM python:3.8-slim
+FROM public.ecr.aws/lambda/python:3.8
 
 # Don't write byte code for a cleaner image
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -22,12 +22,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Set working directory
-WORKDIR /app
-
-# Install tools necessary for compilers, and remove cached package lists
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /var/task
 
 # Install Python dependencies
 COPY requirements.txt .
@@ -44,5 +39,5 @@ COPY --from=frontend-builder /frontend/dist ./app/frontend/dist
 # Say the app uses port 8000
 EXPOSE 8000
 
-# Launch the FastAPI app using Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Launch the FastaPI app using Uvicorn
+CMD ["app.main.handler"]

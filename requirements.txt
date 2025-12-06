@@ -11,6 +11,7 @@ httptools==0.6.4
 idna==3.11
 iniconfig==2.1.0
 Jinja2==3.1.6
+mangum
 MarkupSafe==2.1.5
 mpmath==1.3.0
 networkx==3.1
