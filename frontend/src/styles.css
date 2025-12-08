@@ -1,4 +1,4 @@
-/* ---------- THEME TOKENS ---------- */
+/* Themes */
 
 :root {
   --bg-page: #f3f4f6;
@@ -46,7 +46,7 @@
   --shadow-card: 0 18px 60px rgba(15, 23, 42, 0.9);
 }
 
-/* ---------- GLOBAL ---------- */
+/* Global */
 
 *,
 *::before,
@@ -68,8 +68,6 @@ body {
   color: var(--text-main);
 }
 
-/* ---------- PAGE LAYOUT ---------- */
-
 .page {
   min-height: 100vh;
   background: var(--bg-page);
@@ -77,7 +75,7 @@ body {
   flex-direction: column;
 }
 
-/* ---------- TOP NAV ---------- */
+/* Navbar */
 
 .top-nav {
   position: sticky;
@@ -155,7 +153,7 @@ body {
   gap: 12px;
 }
 
-/* ---------- THEME TOGGLE ---------- */
+/* Theme Toggle Button */
 
 .theme-toggle {
   border-radius: 999px;
@@ -178,7 +176,7 @@ body {
   transform: translateY(-1px);
 }
 
-/* ---------- MAIN ---------- */
+/* Main */
 
 .main {
   flex: 1;
@@ -188,7 +186,7 @@ body {
   padding: 0 24px 40px;
 }
 
-/* ---------- ABOUT MODAL ---------- */
+/* About Modal */
 
 .about-backdrop {
   position: fixed;
@@ -248,7 +246,7 @@ body {
   line-height: 1.5;
 }
 
-/* ---------- HERO ---------- */
+/* Hero */
 
 .hero {
   text-align: center;
@@ -269,7 +267,7 @@ body {
   font-size: 15px;
 }
 
-/* ---------- CONTENT GRID ---------- */
+/* Grid */
 
 .content-grid {
   display: grid;
@@ -286,7 +284,7 @@ body {
   min-width: 0;
 }
 
-/* ---------- CARDS ---------- */
+/* Content cards */
 
 .card {
   background: var(--bg-elevated);
@@ -302,7 +300,7 @@ body {
   gap: 16px;
 }
 
-/* ---------- CARD HEADER ---------- */
+/* Card Header */
 
 .card-header {
   display: flex;
@@ -321,7 +319,7 @@ body {
   gap: 8px;
 }
 
-/* ---------- BUTTONS ---------- */
+/* Buttons */
 
 .btn {
   border-radius: 999px;
@@ -359,7 +357,7 @@ body {
   background: rgba(148, 163, 184, 0.12);
 }
 
-/* ---------- CANVAS ---------- */
+/* Canvas */
 
 .canvas-shell {
   border-radius: var(--radius-md);
@@ -371,7 +369,7 @@ body {
 .canvas-inner {
   width: 100%;
   max-width: 320px;
-  aspect-ratio: 1 / 1;       /* perfect responsive square */
+  aspect-ratio: 1 / 1;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   background: #000;
@@ -385,7 +383,7 @@ canvas {
   display: block;
 }
 
-/* ---------- PREDICTION & ERROR ---------- */
+/* Prediction Scores & Error */
 
 .prediction-banner {
   border-radius: 12px;
@@ -418,7 +416,7 @@ canvas {
   font-size: 13px;
 }
 
-/* ---------- INFO GRID ---------- */
+/* Info Grid */
 
 .info-grid {
   display: block;
@@ -455,7 +453,7 @@ canvas {
   margin-bottom: 2px;
 }
 
-/* ---------- RESULTS CARD ---------- */
+/* Results Card */
 
 .results-card {
   min-height: 360px;
@@ -573,7 +571,7 @@ canvas {
   }
 }
 
-/* ---------- HISTORY SECTION ---------- */
+/* History Section */
 
 .history-section {
   margin-top: 24px;
@@ -646,7 +644,7 @@ canvas {
   color: var(--text-soft);
 }
 
-/* History list */
+/* History List */
 
 .history-list {
   display: flex;
@@ -692,7 +690,7 @@ canvas {
   object-fit: cover;
 }
 
-/* Tiny pill with the digit overlayed on the thumbnail */
+/* History Item Pill for Predicted Digit */
 .history-item-thumb-pill {
   position: absolute;
   bottom: 4px;
@@ -723,7 +721,7 @@ canvas {
   color: var(--text-soft);
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* Responsive Designs */
 
 @media (max-width: 960px) {
   .content-grid {

@@ -359,7 +359,7 @@ const App: React.FC = () => {
               </div>
 
               <p className="about-body">
-                MyMNIST is a small demo web app that lets you draw numerical digits (0–9) and classifies them using a neural network trained on the MNIST dataset.
+                MyMNIST is a small demo web app that lets you draw numerical digits (0-9) and classifies them using a neural network trained on the MNIST dataset.
               </p>
               <p className="about-body">
                 MNIST is probably the most well-known machine learning dataset. Made in the 90s, the MNIST dataset is a collection of 70,000 handwritten digit images (28×28 pixels) that is widely used as a baseline for image classification systems.
@@ -377,7 +377,7 @@ const App: React.FC = () => {
         <section className="hero">
           <h1>Draw &amp; Classify Digits</h1>
           <p>
-            Use our AI-powered digit recognition system to draw any digit from 0–9 and get instant classification results with confidence scores.
+            Draw any digit from 0 to 9 and our AI-powered classification system will predict what it is, along with confidence scores!
           </p>
         </section>
 

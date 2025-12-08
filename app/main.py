@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent
 MODELS_DIR = BASE_DIR.parent / "models"
 MODEL_PATH = MODELS_DIR / "mnist_net.pt"
 
-# Load model onto GPU if it's available, otherwise the CPU
+# Load model onto CPU
 device = torch.device("cpu")
 
 # Load the trained MNIST model once when the app is initialized
