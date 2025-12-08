@@ -377,7 +377,7 @@ const App: React.FC = () => {
         <section className="hero">
           <h1>Draw &amp; Classify Digits</h1>
           <p>
-            Draw any digit from 0 to 9 and our AI-powered classification system will predict what it is, along with confidence scores!
+            Draw any digit from 0 to 9 and our AI-powered classification system will predict what it is!
           </p>
         </section>
 
