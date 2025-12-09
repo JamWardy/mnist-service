@@ -381,6 +381,7 @@ body {
 
 canvas {
   display: block;
+  touch-action: none;
 }
 
 /* Prediction Scores & Error */

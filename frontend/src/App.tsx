@@ -89,6 +89,25 @@ const App: React.FC = () => {
     ctx.lineJoin = "round";
   }, []);
 
+  // For mobile browsers, prevent scrolling using native listener
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (drawingRef.current) {
+        e.preventDefault(); 
+      }
+    };
+
+    // Mobile browsers may assume passive listeners by default
+    canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      canvas.removeEventListener("touchmove", handleTouchMove); // Clean-up function, only once dependencies change (never) or unmounting
+    };
+  }, []);
+
   // Get position of event inside the canvas
   const getCanvasPos = (
     event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
@@ -121,7 +140,7 @@ const App: React.FC = () => {
   const startDrawing = (
     event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
-    // Prevent scrolling while drawing
+    // Prevent weird React behaviour while drawing
     event.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
