@@ -21,7 +21,6 @@ type HistoryItem = {
   digit: number;
   confidence: number;
   probabilities: number[];
-  createdAt: number;
   imageDataUrl: string;
 };
 
@@ -210,7 +209,7 @@ const App: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Capture the current drawing as a PNG data URL
+    // Capture the current drawing as a PNG data URL, use toDataURL as it can be used in <img src=>
     const canvasImageDataUrl = canvas.toDataURL("image/png");    
 
     // Create hidden 28 x 28 canvas and draw the image on it for classification
@@ -225,7 +224,7 @@ const App: React.FC = () => {
     sctx.drawImage(canvas, 0, 0, MNIST_SIZE, MNIST_SIZE);
 
     // Convert the small canvas to a png in memory
-    smallCanvas.toBlob(async (blob) => {
+    smallCanvas.toBlob(async (blob) => { // Use a blob, better for HTTP form
       if (!blob) {
         setError("Failed to create image blob.");
         return;
@@ -277,7 +276,6 @@ const App: React.FC = () => {
           digit: data.digit,
           confidence: data.confidence,
           probabilities: data.probabilities,
-          createdAt: Date.now(),
           imageDataUrl: canvasImageDataUrl,
         };
 
@@ -290,7 +288,7 @@ const App: React.FC = () => {
         setProbabilities(null);
         setPredictedDigit(null);
       }
-    }, "image/png");
+    }, "image/png"); // MIME Type
   };
 
   const restoreCanvasFromImage = (dataUrl: string) => {
@@ -300,6 +298,7 @@ const App: React.FC = () => {
     if (!ctx) return;
 
     const img = new Image();
+    // On load (happens later)
     img.onload = () => {
       ctx.fillStyle = "black";
       // Fill the canvas black
@@ -359,11 +358,11 @@ const App: React.FC = () => {
         {aboutOpen && (
           <div
             className="about-backdrop"
-            onClick={() => setAboutOpen(false)}
+            onClick={() => setAboutOpen(false)} // Close when clicking outside
           >
             <div
               className="about-modal"
-              onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
             >
               <div className="about-modal-header">
                 <h2>About MyMNIST</h2>
@@ -402,7 +401,7 @@ const App: React.FC = () => {
 
         {/* Main content grid */}
       <section className="content-grid">
-        {/* LEFT: Canvas + tips */}
+        {/* Canvas & tips */}
         <div className="left-column">
           <div className="card canvas-card">
             <div className="card-header">
@@ -467,7 +466,7 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* RIGHT: Classification Results */}
+        {/* Classification Results */}
         <div className="right-column">
           <div className="card results-card">
             <h2 className="results-title">Classification Results</h2>

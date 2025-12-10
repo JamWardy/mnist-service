@@ -271,7 +271,7 @@ body {
 
 .content-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.7fr);
+  grid-template-columns: 2.3fr 1.7fr;
   gap: 24px;
   margin-top: 24px;
 }
@@ -726,7 +726,7 @@ canvas {
 
 @media (max-width: 960px) {
   .content-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -748,6 +748,6 @@ canvas {
   }
 
   .info-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 }
