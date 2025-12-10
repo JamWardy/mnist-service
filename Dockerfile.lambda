@@ -21,7 +21,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Flush logs immediately
 ENV PYTHONUNBUFFERED=1
 
-# Set working directory
+# Set working directory (Lambda base image default)
 WORKDIR /var/task
 
 # Install Python dependencies
@@ -36,8 +36,5 @@ COPY models ./models
 # Copy frontend static files
 COPY --from=frontend-builder /frontend/dist ./app/frontend/dist
 
-# Say the app uses port 8000
-EXPOSE 8000
-
-# Launch the FastaPI app using Uvicorn
+# Lambda runtime calls the handler (not Uvicorn)
 CMD ["app.main.handler"]
